@@ -10,6 +10,9 @@ import Loader from './layout/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert';
 import { getProducts } from '../actions/productActions'
+import  Carousel   from 'react-bootstrap/Carousel';
+
+// import '../App.css'
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range)
@@ -40,6 +43,7 @@ const Home = ({ match }) => {
     const dispatch = useDispatch();
 
     const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products)
+    const { product } = useSelector(state => state.productDetails)
 
     const keyword = match.params.keyword
 
@@ -67,8 +71,45 @@ const Home = ({ match }) => {
             {loading ? <Loader /> : (
                 <Fragment>
                     <MetaData title={'Buy Best Products Online'} />
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12 col-md-3"> 
+                                <h1 id="products_heading">Categories</h1>
 
-                    <h1 id="products_heading">Latest Products</h1>
+                                <ul className="pl-0">
+                                                    {categories.map(category => (
+                                                        <li
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                listStyleType: 'none'
+                                                            }}
+                                                            key={category}
+                                                            onClick={() => setCategory(category)}
+                                                        >
+                                                            {category}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                            </div>
+
+                            <div className="col-12 col-md-9 mt-3">
+                                <Carousel>
+                                        <Carousel.Item>
+                                            <img height={370} className="d-block w-100" src="https://res.cloudinary.com/dukthcjo0/image/upload/v1627895476/samples/bike.jpg" alt="alberto" />
+                                        </Carousel.Item>
+                                        <Carousel.Item>
+                                            <img height={370} className="d-block w-100" src="https://res.cloudinary.com/dukthcjo0/image/upload/v1627895480/samples/ecommerce/accessories-bag.jpg" alt="amrit" />
+                                        </Carousel.Item>
+                                        <Carousel.Item>
+                                            <img height={370} className="d-block w-100" src="https://res.cloudinary.com/dukthcjo0/image/upload/v1627895480/samples/ecommerce/leather-bag-gray.jpg" alt="amrit" />
+                                        </Carousel.Item>
+                                    </Carousel>
+                            </div>
+                        </div>
+                    </div>
+
+                                        
+                    <h1 id="products_heading">{category}</h1>
 
                     <section id="products" className="container mt-5">
                         <div className="row">
